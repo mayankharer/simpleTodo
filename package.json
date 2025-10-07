@@ -1,0 +1,21 @@
+{
+  "name": "todo-fullstack-monorepo",
+  "version": "1.0.0",
+  "description": "Full-stack Todo application with Spring Boot and React",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && ./mvnw dependency:resolve",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && ./mvnw clean package -DskipTests",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && ./mvnw spring-boot:run",
+    "start": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "deploy:check": "echo 'Check DEPLOYMENT.md for deployment instructions'"
+  },
+  "keywords": ["spring-boot", "react", "postgresql", "fullstack", "todo"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

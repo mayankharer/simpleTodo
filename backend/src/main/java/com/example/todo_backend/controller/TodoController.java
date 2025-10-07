@@ -14,8 +14,7 @@ import java.util.Optional;
 
 @RestController //makes this class as a REST API controller
 @RequestMapping("/api/todos") // all APIs start with the /api/todos
-//@CrossOrigin(origins = "http://localhost:5173")
-@CrossOrigin(origins = {"${cors.allowed.origins}", "https://localhost:5173"})
+@CrossOrigin(origins = {"${cors.allowed.origins:http://localhost:5173}"})
 public class TodoController {
     private final TodoService todoService;
 
