@@ -2,13 +2,16 @@ services:
   - type: web
     name: todo-backend
     env: java
-    buildCommand: cd backend && ./mvnw clean package -DskipTests
-    startCommand: cd backend && java -jar target/*.jar
+    region: oregon
+    plan: free
+    buildCommand: cd backend && chmod +x mvnw && ./mvnw clean package -DskipTests
+    startCommand: cd backend && java -Dserver.port=$PORT -jar target/*.jar
+    healthCheckPath: /api/test
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
-      - key: PORT
-        value: 8080
+      - key: JAVA_VERSION
+        value: 17
       - key: FRONTEND_URL
         sync: false
       - key: DATABASE_URL
@@ -20,3 +23,5 @@ databases:
   - name: todo-database
     databaseName: todo
     user: todo_user
+    plan: free
+    region: oregon
