@@ -8,9 +8,6 @@ COPY backend/mvnw.cmd .
 COPY backend/.mvn .mvn
 COPY backend/pom.xml .
 
-# Make mvnw executable
-RUN chmod +x ./mvnw
-
 # Download dependencies
 RUN ./mvnw dependency:go-offline -B
 

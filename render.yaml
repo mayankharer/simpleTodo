@@ -1,10 +1,11 @@
 services:
   - type: web
     name: todo-backend
-    env: docker
+    env: java
     region: oregon
     plan: free
-    dockerfilePath: ./Dockerfile
+    buildCommand: cd backend && chmod +x mvnw && ./mvnw clean package -DskipTests
+    startCommand: cd backend && java -Dserver.port=$PORT -jar target/*.jar
     healthCheckPath: /api/test
     envVars:
       - key: SPRING_PROFILES_ACTIVE
