@@ -38,5 +38,9 @@ build/
 
 # Environment specific files
 application-local.properties
+.env
+.env.local
+.env.production
+
 # Maven
 .mvn/wrapper/maven-wrapper.jar
