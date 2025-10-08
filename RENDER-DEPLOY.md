@@ -10,7 +10,7 @@ This guide will help you deploy your full-stack Todo app to Render in less than 
 
 ---
 
-## Step 1: Deploy Backend to Render
+## Step 1: Deploy Backend to Render (Monorepo-aware)
 
 ### Option A: Using render.yaml (Recommended - Easiest!)
 
@@ -27,7 +27,7 @@ This guide will help you deploy your full-stack Todo app to Render in less than 
 7. **Wait for deployment** (5-10 minutes for first deploy)
 8. **Copy your backend URL**: `https://todo-backend.onrender.com`
 
-### Option B: Manual Setup (Alternative)
+### Option B: Manual Setup (Alternative, if you don't use the Blueprint)
 
 1. **Create PostgreSQL Database**:
    - Click "New +" → "PostgreSQL"
@@ -44,16 +44,16 @@ This guide will help you deploy your full-stack Todo app to Render in less than 
    - Name: `todo-backend`
    - Region: Oregon (Free)
    - Branch: `deployment-branch`
-   - Root Directory: Leave empty
+   - Root Directory: `backend`
    - Environment: `Java`
-   - Build Command: `cd backend && chmod +x mvnw && ./mvnw clean package -DskipTests`
-   - Start Command: `cd backend && java -Dserver.port=$PORT -jar target/*.jar`
+   - Build Command: `chmod +x mvnw && ./mvnw clean package -DskipTests`
+   - Start Command: `java -Dserver.port=$PORT -jar target/*.jar`
    - Plan: Free
    
 3. **Add Environment Variables**:
    ```
    SPRING_PROFILES_ACTIVE=render
-   DATABASE_URL=<paste-internal-database-url>
+   DATABASE_URL=<paste INTERNAL Database URL>
    FRONTEND_URL=https://your-app-name.vercel.app
    JAVA_VERSION=17
    ```
@@ -72,7 +72,7 @@ This guide will help you deploy your full-stack Todo app to Render in less than 
    - Output Directory: `dist`
    - Install Command: `npm install`
 
-5. **Add Environment Variable**:
+5. **Add Environment Variable** (Vercel → Settings → Environment Variables):
    ```
    VITE_API_URL=https://todo-backend.onrender.com/api
    ```
@@ -89,7 +89,7 @@ This guide will help you deploy your full-stack Todo app to Render in less than 
 1. **Go back to Render Dashboard**
 2. **Open your web service** (todo-backend)
 3. **Go to "Environment"**
-4. **Update `FRONTEND_URL`** with your actual Vercel URL:
+4. **Update `FRONTEND_URL`** with your actual Vercel URL (no trailing slash):
    ```
    FRONTEND_URL=https://your-app-name.vercel.app
    ```
@@ -137,7 +137,7 @@ Your app is now live and completely free!
 
 ### Database connection errors
 - **Issue**: Can't connect to database
-- **Solution**: Use the **Internal Database URL** from Render PostgreSQL (not external)
+- **Solution**: Use the **Internal Database URL** from Render PostgreSQL (not external). In Blueprint deploys, we already wire `DATABASE_URL` to the internal connection string.
 
 ### First load is slow
 - **Issue**: Service takes 30+ seconds to respond
